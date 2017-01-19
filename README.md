@@ -1,0 +1,1 @@
+https://framagit.org/Deevad/cat-avatar-generator
