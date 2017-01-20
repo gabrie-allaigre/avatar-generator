@@ -1,6 +1,6 @@
 package com.talanlabs.avatargenerator.cat;
 
-import com.talanlabs.avatargenerator.AvatarBuilder;
+import com.talanlabs.avatargenerator.Avatar;
 import com.talanlabs.avatargenerator.element.ElementInfo;
 import com.talanlabs.avatargenerator.element.ElementRegistry;
 
@@ -9,8 +9,8 @@ public class CatAvatar {
     /**
      * New avatar builder with cat
      */
-    public static AvatarBuilder newAvatarBuilder() {
-        return AvatarBuilder.newBuilder().size(128, 128).elementRegistry(newElementRegistry()).colorizeFunction(null).padding(0);
+    public static Avatar.AvatarBuilder newAvatarBuilder() {
+	    return Avatar.newBuilder().elementRegistry(newElementRegistry());
     }
 
     /**

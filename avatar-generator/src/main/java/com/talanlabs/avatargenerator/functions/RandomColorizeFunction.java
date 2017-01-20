@@ -1,13 +1,13 @@
 package com.talanlabs.avatargenerator.functions;
 
-import com.talanlabs.avatargenerator.AvatarBuilder;
+import com.talanlabs.avatargenerator.Avatar;
 import com.talanlabs.avatargenerator.IAvatarInfo;
 import com.talanlabs.avatargenerator.utils.AvatarUtils;
 
 import java.awt.Color;
 import java.util.List;
 
-public class RandomColorizeFunction implements AvatarBuilder.IColorizeFunction {
+public class RandomColorizeFunction implements Avatar.IColorizeFunction {
 
 	private List<Color> colors;
 	private Color whiteColor;

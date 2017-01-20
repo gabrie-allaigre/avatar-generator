@@ -1,5 +1,6 @@
 package com.talanlabs.avatargenerator;
 
+import com.talanlabs.avatargenerator.cache.ICache;
 import com.talanlabs.avatargenerator.element.ElementInfo;
 import com.talanlabs.avatargenerator.element.ElementRegistry;
 import com.talanlabs.avatargenerator.layers.ILayer;
@@ -8,100 +9,64 @@ import com.talanlabs.avatargenerator.utils.AvatarUtils;
 import javax.imageio.ImageIO;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class AvatarBuilder {
+public class Avatar {
 
-	private ElementRegistry elementRegistry = null;
 	private int width = 128;
 	private int height = 128;
-	private int padding = 8;
+	private int padding = 0;
 	private int margin = 0;
+
+	private ElementRegistry elementRegistry = null;
 	private IColorizeFunction colorizeFunction = null;
 	private ILayer[] layers;
-
-	private AvatarBuilder() {
-		super();
-	}
+	private ICache cache;
 
 	public static AvatarBuilder newBuilder() {
 		return new AvatarBuilder();
 	}
 
-	/**
-	 * Element loader
-	 */
-	public AvatarBuilder elementRegistry(ElementRegistry elementRegistry) {
-		this.elementRegistry = elementRegistry;
-		return this;
+	private Avatar() {
+		super();
 	}
 
-	/**
-	 * Set size of avatar
-	 * Default is 96x96
-	 */
-	public AvatarBuilder size(int width, int height) {
-		this.width = width;
-		this.height = height;
-		return this;
+	public int getWidth() {
+		return width;
 	}
 
-	/**
-	 * Set space with border
-	 * Default is 8
-	 */
-	public AvatarBuilder padding(int padding) {
-		this.padding = padding;
-		return this;
+	public int getHeight() {
+		return height;
 	}
 
-	/**
-	 * Set space out border
-	 * Default is 8
-	 */
-	public AvatarBuilder margin(int margin) {
-		this.margin = margin;
-		return this;
+	public int getPadding() {
+		return padding;
 	}
 
-	/**
-	 * Apply layers after
-	 */
-	public AvatarBuilder layers(ILayer... layers) {
-		this.layers = layers;
-		return this;
+	public int getMargin() {
+		return margin;
 	}
 
-	/**
-	 * Color of element
-	 */
-	public AvatarBuilder color(Color color) {
-		return colorizeFunction((c, e) -> color);
+	public BufferedImage create(long code) {
+		Random random = new Random(code);
+
+		IAvatarInfo avatarInfo = new MyAvatarInfo(code, random);
+
+		if (cache != null) {
+			return cache.get(avatarInfo, this::buildAll);
+		} else {
+			return buildAll(avatarInfo);
+		}
 	}
 
-	/**
-	 * Color of element
-	 */
-	public AvatarBuilder colorizeFunction(IColorizeFunction colorizeFunction) {
-		this.colorizeFunction = colorizeFunction;
-		return this;
-	}
-
-	/**
-	 * Build image
-	 */
-	public BufferedImage build(long code) {
+	private BufferedImage buildAll(IAvatarInfo avatarInfo) {
 		try {
-			Random random = new Random(code);
-
-			IAvatarInfo avatarInfo = new MyAvatarInfo(code, random);
-
 			BufferedImage bufferedImage = buildAvatarImage(avatarInfo);
 
 			int wm = width - margin * 2;
@@ -123,11 +88,15 @@ public class AvatarBuilder {
 			bufferedImage = AvatarUtils.planImage(bufferedImage, width, height);
 			return bufferedImage;
 		} catch (Exception e) {
-			throw new RuntimeException("Failed to build avatar", e);
+			throw new AvatarException("Failed to build avatar", e);
 		}
 	}
 
 	private BufferedImage buildAvatarImage(IAvatarInfo avatarInfo) throws IOException {
+		if (elementRegistry == null) {
+			return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		}
+
 		Random random = avatarInfo.getRandom();
 
 		int xmin = Integer.MAX_VALUE, ymin = Integer.MAX_VALUE, xmax = Integer.MIN_VALUE, ymax = Integer.MIN_VALUE;
@@ -135,23 +104,23 @@ public class AvatarBuilder {
 		int groupCount = elementRegistry.getGroupCount();
 		if (groupCount > 0) {
 			int d = random.nextInt(groupCount);
-			ElementInfo[] elements = elementRegistry.getGroup(d);
+			ElementInfo[] elements = elementRegistry.getGroup(avatarInfo, d);
 			if (elements != null && elements.length > 0) {
 				for (ElementInfo element : elements) {
-					int elementCount = elementRegistry.getElementCount(element.name);
+					int elementCount = elementRegistry.getElementCount(avatarInfo, element.name);
 					if (elementCount > 0) {
 						int index = random.nextInt(elementCount);
-						//System.out.println(elementRegistry.getElement(element.name, index));
-						Image image = ImageIO
-								.read(Files.newInputStream(elementRegistry.getElement(element.name, index)));
+						BufferedImage bufferedImage = ImageIO
+								.read(Files
+										.newInputStream(elementRegistry.getElement(avatarInfo, element.name, index)));
 
-						xmin = Math.min(xmin, -image.getWidth(null) / 2 + element.offsetX);
-						xmax = Math.max(xmax, image.getWidth(null) / 2 + element.offsetX);
-						ymin = Math.min(ymin, -image.getHeight(null) / 2 + element.offsetY);
-						ymax = Math.max(ymax, image.getHeight(null) / 2 + element.offsetY);
+						xmin = Math.min(xmin, -bufferedImage.getWidth() / 2 + element.offsetX);
+						xmax = Math.max(xmax, bufferedImage.getWidth() / 2 + element.offsetX);
+						ymin = Math.min(ymin, -bufferedImage.getHeight() / 2 + element.offsetY);
+						ymax = Math.max(ymax, bufferedImage.getHeight() / 2 + element.offsetY);
 
 						imageInfos.add(new ImageInfo(element.name, AvatarUtils
-								.toARGBImage(image), element.offsetX, element.offsetY));
+								.toARGBImage(bufferedImage), element.offsetX, element.offsetY));
 					}
 				}
 			}
@@ -174,7 +143,7 @@ public class AvatarBuilder {
 	}
 
 	private void copyImage(Graphics2D g2, IAvatarInfo avatarInfo, ImageInfo imageInfo, int width, int height) throws IOException {
-		Image img = imageInfo.image;
+		BufferedImage img = imageInfo.image;
 		if (colorizeFunction != null) {
 			Color color = colorizeFunction.colorize(avatarInfo, imageInfo.element);
 			if (color != null) {
@@ -186,6 +155,103 @@ public class AvatarBuilder {
 		int x = (width - w) / 2 + imageInfo.offsetX;
 		int y = (height - h) / 2 + imageInfo.offsetY;
 		g2.drawImage(img, x, y, w, h, null);
+	}
+
+	public static class AvatarBuilder {
+
+		private int width = 128;
+		private int height = 128;
+		private int padding = 0;
+		private int margin = 0;
+
+		private ElementRegistry elementRegistry = null;
+		private IColorizeFunction colorizeFunction = null;
+		private ILayer[] layers;
+		private ICache cache;
+
+		private AvatarBuilder() {
+			super();
+		}
+
+		/**
+		 * Element loader
+		 */
+		public AvatarBuilder elementRegistry(ElementRegistry elementRegistry) {
+			this.elementRegistry = elementRegistry;
+			return this;
+		}
+
+		/**
+		 * Set size of avatar
+		 * Default is 96x96
+		 */
+		public AvatarBuilder size(int width, int height) {
+			this.width = width;
+			this.height = height;
+			return this;
+		}
+
+		/**
+		 * Set space with border
+		 * Default is 8
+		 */
+		public AvatarBuilder padding(int padding) {
+			this.padding = padding;
+			return this;
+		}
+
+		/**
+		 * Set space out border
+		 * Default is 8
+		 */
+		public AvatarBuilder margin(int margin) {
+			this.margin = margin;
+			return this;
+		}
+
+		/**
+		 * Apply layers after
+		 */
+		public AvatarBuilder layers(ILayer... layers) {
+			this.layers = layers;
+			return this;
+		}
+
+		/**
+		 * Color of element
+		 */
+		public AvatarBuilder color(Color color) {
+			return colorizeFunction((c, e) -> color);
+		}
+
+		/**
+		 * Color of element
+		 */
+		public AvatarBuilder colorizeFunction(IColorizeFunction colorizeFunction) {
+			this.colorizeFunction = colorizeFunction;
+			return this;
+		}
+
+		public AvatarBuilder cache(ICache cache) {
+			this.cache = cache;
+			return this;
+		}
+
+		/**
+		 * Build image
+		 */
+		public Avatar build() {
+			Avatar avatar = new Avatar();
+			avatar.width = width;
+			avatar.height = height;
+			avatar.padding = padding;
+			avatar.margin = margin;
+			avatar.elementRegistry = elementRegistry;
+			avatar.colorizeFunction = colorizeFunction;
+			avatar.layers = layers != null ? Arrays.copyOf(layers, layers.length) : null;
+			avatar.cache = cache;
+			return avatar;
+		}
 	}
 
 	public interface IColorizeFunction {
@@ -204,11 +270,11 @@ public class AvatarBuilder {
 	private static class ImageInfo {
 
 		public final String element;
-		public final Image image;
+		public final BufferedImage image;
 		public final int offsetX;
 		public final int offsetY;
 
-		ImageInfo(String element, Image image, int offsetX, int offsetY) {
+		ImageInfo(String element, BufferedImage image, int offsetX, int offsetY) {
 			super();
 
 			this.element = element;

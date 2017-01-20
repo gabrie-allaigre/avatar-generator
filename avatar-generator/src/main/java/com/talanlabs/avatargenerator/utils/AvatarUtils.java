@@ -39,8 +39,8 @@ public class AvatarUtils {
 	 * @return new image
 	 */
 	public static BufferedImage resizeImage(BufferedImage src, int width, int height) {
-		int original_width = src.getWidth(null);
-		int original_height = src.getHeight(null);
+		int original_width = src.getWidth();
+		int original_height = src.getHeight();
 
 		if (original_width == width && original_height == height) {
 			return src;
@@ -73,20 +73,30 @@ public class AvatarUtils {
 	 * @param color color
 	 * @return image with color
 	 */
-	public static BufferedImage fillColorImage(Image src, Color color) {
-		BufferedImage dest = new BufferedImage(src.getWidth(null), src.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+	public static BufferedImage fillColorImage(BufferedImage src, Color color) {
+		int original_width = src.getWidth();
+		int original_height = src.getHeight();
+
+		BufferedImage dest = new BufferedImage(original_width, original_height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2 = dest.createGraphics();
 		g2.setColor(color);
-		g2.fillRect(0, 0, src.getWidth(null), src.getHeight(null));
+		g2.fillRect(0, 0, original_width, original_height);
 		g2.setComposite(AlphaComposite.DstIn);
 		g2.drawImage(src, 0, 0, null);
 		g2.dispose();
 		return dest;
 	}
 
-	public static BufferedImage tintImage(Image src, Color color) {
-		int w = src.getWidth(null);
-		int h = src.getHeight(null);
+	/**
+	 * Tint image
+	 *
+	 * @param src   image source
+	 * @param color color
+	 * @return image tint with color
+	 */
+	public static BufferedImage tintImage(BufferedImage src, Color color) {
+		int w = src.getWidth();
+		int h = src.getHeight();
 		BufferedImage dest = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = dest.createGraphics();
 		g.drawImage(src, 0, 0, null);
@@ -106,8 +116,8 @@ public class AvatarUtils {
 	 * @return new image
 	 */
 	public static BufferedImage planImage(BufferedImage src, int width, int height) {
-		int original_width = src.getWidth(null);
-		int original_height = src.getHeight(null);
+		int original_width = src.getWidth();
+		int original_height = src.getHeight();
 		if (original_width == width && original_height == height) {
 			return src;
 		}
@@ -140,8 +150,8 @@ public class AvatarUtils {
 	 * @param src image
 	 * @return new image type argb
 	 */
-	public static BufferedImage toARGBImage(Image src) {
-		BufferedImage dest = new BufferedImage(src.getWidth(null), src.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+	public static BufferedImage toARGBImage(BufferedImage src) {
+		BufferedImage dest = new BufferedImage(src.getWidth(), src.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2 = dest.createGraphics();
 		g2.drawImage(src, 0, 0, null);
 		g2.dispose();

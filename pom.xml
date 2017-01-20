@@ -28,6 +28,8 @@
         <nexus-staging-maven-plugin.version>1.6.7</nexus-staging-maven-plugin.version>
 
         <jlegorify.version>1.0.0</jlegorify.version>
+		<filters.version>2.0.235-1</filters.version>
+		<guava.version>19.0</guava.version>
     </properties>
     <organization>
         <name>Talanlabs</name>
@@ -58,12 +60,6 @@
         <system>gitlab</system>
         <url>https://gitlab.talanlabs.com/gabriel-allaigre/avatar-generator-parent/issues</url>
     </issueManagement>
-    <modules>
-        <module>avatar-generator</module>
-        <module>avatar-generator-cat</module>
-        <module>dev</module>
-        <module>avatar-generator-smiley</module>
-    </modules>
     <build>
         <plugins>
             <plugin>
@@ -167,9 +163,14 @@
             <dependency>
                 <groupId>com.jhlabs</groupId>
                 <artifactId>filters</artifactId>
-                <version>2.0.235-1</version>
+				<version>${filters.version}</version>
             </dependency>
-        </dependencies>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava.version}</version>
+			</dependency>
+		</dependencies>
     </dependencyManagement>
     <distributionManagement>
         <snapshotRepository>
@@ -182,6 +183,27 @@
         </repository>
     </distributionManagement>
     <profiles>
+		<profile>
+			<id>ALL</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+
+			<modules>
+				<module>avatar-generator</module>
+				<module>avatar-generator-cat</module>
+				<module>dev</module>
+				<module>avatar-generator-smiley</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>CI</id>
+			<modules>
+				<module>avatar-generator</module>
+				<module>avatar-generator-cat</module>
+				<module>avatar-generator-smiley</module>
+			</modules>
+		</profile>
         <profile>
             <id>release</id>
             <build>
