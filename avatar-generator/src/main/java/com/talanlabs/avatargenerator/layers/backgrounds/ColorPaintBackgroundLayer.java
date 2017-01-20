@@ -1,5 +1,7 @@
 package com.talanlabs.avatargenerator.layers.backgrounds;
 
+import com.talanlabs.avatargenerator.IAvatarInfo;
+
 import java.awt.Color;
 import java.awt.Paint;
 import java.awt.image.BufferedImage;
@@ -19,7 +21,7 @@ public class ColorPaintBackgroundLayer extends AbstractPaintBackgroundLayer {
     }
 
     @Override
-    protected Paint buildPaint(long code, BufferedImage bufferedImage) {
+    protected Paint buildPaint(IAvatarInfo avatarInfo, BufferedImage bufferedImage) {
         return color;
     }
 }

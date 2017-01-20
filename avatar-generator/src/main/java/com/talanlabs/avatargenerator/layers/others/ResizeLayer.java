@@ -1,5 +1,6 @@
 package com.talanlabs.avatargenerator.layers.others;
 
+import com.talanlabs.avatargenerator.IAvatarInfo;
 import com.talanlabs.avatargenerator.layers.ILayer;
 import com.talanlabs.avatargenerator.utils.AvatarUtils;
 
@@ -34,7 +35,7 @@ public class ResizeLayer implements ILayer {
     }
 
     @Override
-    public BufferedImage apply(long code, BufferedImage src) {
+    public BufferedImage apply(IAvatarInfo avatarInfo, BufferedImage src) {
         return AvatarUtils.resizeImage(src, width, height);
     }
 }

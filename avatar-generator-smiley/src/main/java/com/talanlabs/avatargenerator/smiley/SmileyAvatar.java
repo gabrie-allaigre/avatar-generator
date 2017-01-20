@@ -58,10 +58,12 @@ public class SmileyAvatar {
     }
 
     public static AvatarBuilder newGhostAvatarBuilder() {
-        return AvatarBuilder.newBuilder().size(128, 128).padding(0).elementRegistry(newGhostElementRegistry()).colorizeFunction((code, element) -> {
-            if (SmileyElementType.moreShape.name().equals(element)) {
-                Color color = AvatarUtils.defaultColors.get((int) (code % AvatarUtils.defaultColors.size()));
-                return new Color(color.getRed(), color.getGreen(), color.getBlue(), 196);
+	    return AvatarBuilder.newBuilder().size(128, 128).padding(0).elementRegistry(newGhostElementRegistry())
+			    .colorizeFunction((avatarInfo, element) -> {
+				    if (SmileyElementType.moreShape.name().equals(element)) {
+	            Color color = AvatarUtils.defaultColors
+			            .get((int) (avatarInfo.getCode() % AvatarUtils.defaultColors.size()));
+					    return new Color(color.getRed(), color.getGreen(), color.getBlue(), 196);
             }
             return null;
         }).layers(new ShadowLayer());

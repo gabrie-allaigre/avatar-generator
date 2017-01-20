@@ -1,5 +1,6 @@
 package com.talanlabs.avatargenerator.layers.others;
 
+import com.talanlabs.avatargenerator.IAvatarInfo;
 import com.talanlabs.avatargenerator.layers.ILayer;
 import com.talanlabs.avatargenerator.utils.AvatarUtils;
 
@@ -24,7 +25,7 @@ public class RatioLayer implements ILayer {
     }
 
     @Override
-    public BufferedImage apply(long code, BufferedImage src) {
+    public BufferedImage apply(IAvatarInfo avatarInfo, BufferedImage src) {
         int width = src.getWidth();
         int height = src.getHeight();
 

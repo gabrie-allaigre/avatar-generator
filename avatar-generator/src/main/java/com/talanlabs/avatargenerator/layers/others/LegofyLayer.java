@@ -1,5 +1,6 @@
 package com.talanlabs.avatargenerator.layers.others;
 
+import com.talanlabs.avatargenerator.IAvatarInfo;
 import com.talanlabs.avatargenerator.layers.ILayer;
 import com.talanlabs.jlegofy.JLegofyEngine;
 import com.talanlabs.jlegofy.JLegofyException;
@@ -32,7 +33,7 @@ public class LegofyLayer implements ILayer {
     }
 
     @Override
-    public BufferedImage apply(long code, BufferedImage src) {
+    public BufferedImage apply(IAvatarInfo avatarInfo, BufferedImage src) {
         return engine.toLegofy(src, precision);
     }
 }

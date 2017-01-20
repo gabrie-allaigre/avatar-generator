@@ -1,5 +1,6 @@
 package com.talanlabs.avatargenerator.layers.masks;
 
+import com.talanlabs.avatargenerator.IAvatarInfo;
 import com.talanlabs.avatargenerator.utils.AvatarUtils;
 
 import java.awt.Color;
@@ -9,7 +10,7 @@ import java.awt.image.BufferedImage;
 public class CircleMaskLayer extends AbstractMaskLayer {
 
     @Override
-    protected BufferedImage buildMask(long code, BufferedImage src) {
+    protected BufferedImage buildMask(IAvatarInfo avatarInfo, BufferedImage src) {
         int width = src.getWidth();
         int height = src.getHeight();
 

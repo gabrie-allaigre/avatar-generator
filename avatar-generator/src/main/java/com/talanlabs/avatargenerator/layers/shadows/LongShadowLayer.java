@@ -1,5 +1,7 @@
 package com.talanlabs.avatargenerator.layers.shadows;
 
+import com.talanlabs.avatargenerator.IAvatarInfo;
+
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
@@ -26,7 +28,7 @@ public class LongShadowLayer extends AbstractShadowLayer {
     }
 
     @Override
-    protected BufferedImage buildShadow(long code, BufferedImage src) {
+    protected BufferedImage buildShadow(IAvatarInfo avatarInfo, BufferedImage src) {
         int width = src.getWidth();
         int height = src.getHeight();
 
