@@ -2,6 +2,12 @@
 
 Generate one avatar
 
+![image](doc/multi.png)
+
+## Dependency
+
+In Central Maven :
+
 ```xml
 <dependency>
     <groupId>com.talanlabs</groupId>
@@ -11,6 +17,23 @@ Generate one avatar
 ```
 
 ## Avatar prédéfinis
+
+### Triangle
+
+Source : https://github.com/donpark/triangle
+
+**Example 1 :**
+
+```java
+Avatar avatar = TriangleAvatar.newAvatarBuilder().build();
+
+avatar.create(123456L);
+```
+
+[Sample Triangle1](sample/src/main/java/Triangle1Main.java)
+
+![image](doc/triangle1.png)
+
 
 ### Identicon
 

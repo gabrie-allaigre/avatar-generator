@@ -16,10 +16,11 @@ public class AvatarShowing {
 	}
 
 	public static void showAvatar(Avatar avatar) {
-		int size = avatar.getWidth();
+		showAvatar(avatar, 4, 1);
+	}
 
-		int w = 4;
-		int h = 1;
+	public static void showAvatar(Avatar avatar, int w, int h) {
+		int size = avatar.getWidth();
 		BufferedImage dest = new BufferedImage(size * w, size * h, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2 = dest.createGraphics();
 		AvatarUtils.activeAntialiasing(g2);
@@ -37,11 +38,10 @@ public class AvatarShowing {
 
 		g2.dispose();
 
-		//showImage(avatar3.build(3342383633144681140L));
 		showImage(dest);
 	}
 
-	private static void showImage(BufferedImage bi) {
+	public static void showImage(BufferedImage bi) {
 		try {
 			Path file = Files.createTempFile("img", ".png");
 			ImageIO.write(bi, "png", file.toFile());
