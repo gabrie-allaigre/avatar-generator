@@ -6,7 +6,7 @@
     <groupId>com.talanlabs</groupId>
     <artifactId>avatar-generator-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+	<packaging>pom</packaging>
     <name>Avatar Generator - Parent</name>
     <description>Generator of avatar</description>
     <url>https://gitlab.talanlabs.com/gabriel-allaigre/avatar-generator-parent</url>
@@ -192,8 +192,9 @@
 			<modules>
 				<module>avatar-generator</module>
 				<module>avatar-generator-cat</module>
-				<module>dev</module>
 				<module>avatar-generator-smiley</module>
+				<module>avatar-generator-8bit</module>
+				<module>sample</module>
 			</modules>
 		</profile>
 		<profile>
@@ -202,6 +203,7 @@
 				<module>avatar-generator</module>
 				<module>avatar-generator-cat</module>
 				<module>avatar-generator-smiley</module>
+				<module>avatar-generator-8bit</module>
 			</modules>
 		</profile>
         <profile>

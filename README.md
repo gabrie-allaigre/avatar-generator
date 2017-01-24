@@ -20,7 +20,9 @@
 </dependency>
 ```
 
-Exemple 1 :
+Images sources : https://framagit.org/Deevad/cat-avatar-generator
+
+**Example 1 :**
 
 ```java
 Avatar avatar = CatAvatar.newAvatarBuilder().build();
@@ -28,7 +30,9 @@ Avatar avatar = CatAvatar.newAvatarBuilder().build();
 avatar.create(123456L);
 ```
 
-Exemple 2 :
+![image](doc/cat1.png)
+
+**Example 2 :**
 
 ```java
 Avatar avatar = CatAvatar.newAvatarBuilder()
@@ -38,7 +42,7 @@ Avatar avatar = CatAvatar.newAvatarBuilder()
 avatar.create(123456L);
 ```
 
-Sources des images : https://framagit.org/Deevad/cat-avatar-generator
+![image](doc/cat2.png)
 
 ### Smiley
 
@@ -50,7 +54,7 @@ Sources des images : https://framagit.org/Deevad/cat-avatar-generator
 </dependency>
 ```
 
-Exemple 1 :
+**Example 1 :**
 
 ```java
 Avatar avatar = SmileyAvatar.newAccessoriesAvatarBuilder().build();
@@ -58,11 +62,19 @@ Avatar avatar = SmileyAvatar.newAccessoriesAvatarBuilder().build();
 avatar.create(123456L);
 ```
 
+![image](doc/smiley1.png)
+
+**Example 2 :**
+
 ```java
 Avatar avatar = SmileyAvatar.newEyeMouthAvatarBuilder().build();
 
 avatar.create(123456L);
 ```
+
+![image](doc/smiley2.png)
+
+**Example 3 :**
 
 ```java
 Avatar avatar = SmileyAvatar.newGhostAvatarBuilder().build();
@@ -70,8 +82,47 @@ Avatar avatar = SmileyAvatar.newGhostAvatarBuilder().build();
 avatar.create(123456L);
 ```
 
+![image](doc/smiley3.png)
+
+**Example 4 :**
+
 ```java
 Avatar avatar = SmileyAvatar.newDefaultAvatarBuilder().build();
 
 avatar.create(123456L);
+
 ```
+
+![image](doc/smiley4.png)
+
+### 8 bit
+
+```xml
+<dependency>
+    <groupId>com.talanlabs</groupId>
+    <artifactId>avatar-generator-8bit</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+Images sources : https://github.com/o1egl/govatar
+
+**Example 1 :**
+
+```java
+Avatar avatar = EightBitAvatar.newMaleAvatarBuilder().build();
+
+avatar.create(123456L);
+```
+
+![image](doc/8bitmale.png)
+
+**Example 2 :**
+
+```java
+Avatar avatar = EightBitAvatar.newFemaleAvatarBuilder().build();
+
+avatar.create(123456L);
+```
+
+![image](doc/8bitfemale.png)
