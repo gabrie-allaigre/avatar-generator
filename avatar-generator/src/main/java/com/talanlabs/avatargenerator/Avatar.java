@@ -231,7 +231,7 @@ public class Avatar {
 
 		/**
 		 * Set size of avatar
-		 * Default is 96x96
+		 * Default is 128x128
 		 */
 		public AvatarBuilder size(int width, int height) {
 			this.width = width;

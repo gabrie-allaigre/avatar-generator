@@ -16,7 +16,32 @@ In Central Maven :
 </dependency>
 ```
 
-## Avatar prédéfinis
+## Usage
+
+Use `Avatar.newBuilder()...build()`
+
+**Configuration :**
+
+|Method|Description|
+|---|---|
+| elementRegistry(ElementRegistry elementRegistry) | Registry elements & groups |
+| size(int width, int height) | Size of final image |
+| padding(int padding) | Add padding in pixel of elements |
+| margin(int margin) | Add marge |
+| layers(ILayer... layers) | Add layers to apply in elements |
+| color(Color color) | Colorize all elements |
+| colorizeFunction(IColorizeFunction colorizeFunction) | Colorize elements |
+| cache(ICache cache) | Use cache |
+
+**Create :**
+
+|Method|Description|
+|---|---|
+| BufferedImage create(long code) | Create Avatar as BufferedImage |
+| byte[] createAsPngBytes(long code) | Create Avatar as Png byte array |
+| void createAsPngToFile(long code, File file) | Create Avatar as Png to file |
+
+## Predefined avatar
 
 ### Triangle
 
