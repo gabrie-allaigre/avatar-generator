@@ -4,6 +4,7 @@ import com.talanlabs.avatargenerator.IAvatarInfo;
 
 import java.net.URI;
 import java.nio.file.FileSystem;
+import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -36,8 +37,13 @@ public class ElementRegistry {
 			URI uri = ElementRegistry.class.getResource(path).toURI();
 			Path myPath;
 			if (uri.getScheme().equals("jar")) {
-				FileSystem fileSystem = FileSystems.newFileSystem(uri, Collections.emptyMap());
-				myPath = fileSystem.getPath(path);
+				try {
+					FileSystem fileSystem = FileSystems.getFileSystem(uri);
+					myPath = fileSystem.getPath(path);
+				} catch (FileSystemNotFoundException e) {
+					FileSystem fileSystem = FileSystems.newFileSystem(uri, Collections.emptyMap());
+					myPath = fileSystem.getPath(path);
+				}
 			} else {
 				myPath = Paths.get(uri);
 			}
