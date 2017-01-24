@@ -1,5 +1,7 @@
 # Avatar Generator
 
+Generate one avatar
+
 ```xml
 <dependency>
     <groupId>com.talanlabs</groupId>
@@ -9,6 +11,32 @@
 ```
 
 ## Avatar prédéfinis
+
+### GitHub
+
+**Example 1 :**
+
+```java
+Avatar avatar = GitHubAvatar.newAvatarBuilder().layers(new ColorPaintBackgroundLayer(Color.WHITE)).build();
+
+avatar.create(123456L);
+```
+
+[Sample GitHub1](sample/src/main/java/GitHub1Main.java)
+
+![image](doc/github1.png)
+
+**Example 2 :**
+
+```java
+Avatar avatar = GitHubAvatar.newAvatarBuilder().build();
+
+avatar.create(123456L);
+```
+
+[Sample GitHub2](sample/src/main/java/GitHub2Main.java)
+
+![image](doc/github2.png)
 
 ### Cat
 
@@ -30,6 +58,8 @@ Avatar avatar = CatAvatar.newAvatarBuilder().build();
 avatar.create(123456L);
 ```
 
+[Sample Cat1](sample/src/main/java/Cat1Main.java)
+
 ![image](doc/cat1.png)
 
 **Example 2 :**
@@ -41,6 +71,8 @@ Avatar avatar = CatAvatar.newAvatarBuilder()
 
 avatar.create(123456L);
 ```
+
+[Sample Cat2](sample/src/main/java/Cat2Main.java)
 
 ![image](doc/cat2.png)
 
@@ -62,6 +94,8 @@ Avatar avatar = SmileyAvatar.newAccessoriesAvatarBuilder().build();
 avatar.create(123456L);
 ```
 
+[Sample Smiley1](sample/src/main/java/Smiley1Main.java)
+
 ![image](doc/smiley1.png)
 
 **Example 2 :**
@@ -71,6 +105,8 @@ Avatar avatar = SmileyAvatar.newEyeMouthAvatarBuilder().build();
 
 avatar.create(123456L);
 ```
+
+[Sample Smiley2](sample/src/main/java/Smiley2Main.java)
 
 ![image](doc/smiley2.png)
 
@@ -82,6 +118,8 @@ Avatar avatar = SmileyAvatar.newGhostAvatarBuilder().build();
 avatar.create(123456L);
 ```
 
+[Sample Smiley3](sample/src/main/java/Smiley3Main.java)
+
 ![image](doc/smiley3.png)
 
 **Example 4 :**
@@ -92,6 +130,8 @@ Avatar avatar = SmileyAvatar.newDefaultAvatarBuilder().build();
 avatar.create(123456L);
 
 ```
+
+[Sample Smiley4](sample/src/main/java/Smiley4Main.java)
 
 ![image](doc/smiley4.png)
 
@@ -115,6 +155,8 @@ Avatar avatar = EightBitAvatar.newMaleAvatarBuilder().build();
 avatar.create(123456L);
 ```
 
+[Sample 8bit1](sample/src/main/java/EightBit1Main.java)
+
 ![image](doc/8bitmale.png)
 
 **Example 2 :**
@@ -124,5 +166,7 @@ Avatar avatar = EightBitAvatar.newFemaleAvatarBuilder().build();
 
 avatar.create(123456L);
 ```
+
+[Sample 8bit2](sample/src/main/java/EightBit2Main.java)
 
 ![image](doc/8bitfemale.png)

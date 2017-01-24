@@ -94,7 +94,7 @@ public class Avatar {
 
 	private BufferedImage buildAvatarImage(IAvatarInfo avatarInfo) throws IOException {
 		if (elementRegistry == null) {
-			return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+			return new BufferedImage(width - (margin + padding) * 2, height - (margin + padding) * 2, BufferedImage.TYPE_INT_ARGB);
 		}
 
 		Random random = avatarInfo.getRandom();

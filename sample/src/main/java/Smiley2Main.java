@@ -7,6 +7,6 @@ public class Smiley2Main {
 
 	public static void main(String[] args) throws Exception {
 		AvatarShowing.showAvatar(SmileyAvatar.newEyeMouthAvatarBuilder()
-				.cache(ICache.defaultCache(Paths.get("D:/temp/avatar/2"))).build());
+				.cache(ICache.defaultCache(Paths.get("temp/avatar/2"))).build());
 	}
 }

@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 public class Cat1Main {
 
 	public static void main(String[] args) throws Exception {
-		AvatarShowing.showAvatar(CatAvatar.newAvatarBuilder().cache(ICache.defaultCache(Paths.get("D:/temp/avatar/5")))
+		AvatarShowing.showAvatar(CatAvatar.newAvatarBuilder().cache(ICache.defaultCache(Paths.get("temp/avatar/5")))
 				.build());
 	}
 }
