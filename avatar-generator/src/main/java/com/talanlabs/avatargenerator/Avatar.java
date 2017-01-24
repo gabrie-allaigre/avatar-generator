@@ -10,6 +10,8 @@ import javax.imageio.ImageIO;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -29,12 +31,12 @@ public class Avatar {
 	private ILayer[] layers;
 	private ICache cache;
 
-	public static AvatarBuilder newBuilder() {
-		return new AvatarBuilder();
-	}
-
 	private Avatar() {
 		super();
+	}
+
+	public static AvatarBuilder newBuilder() {
+		return new AvatarBuilder();
 	}
 
 	public int getWidth() {
@@ -53,6 +55,12 @@ public class Avatar {
 		return margin;
 	}
 
+	/**
+	 * Create avatar image
+	 *
+	 * @param code the code
+	 * @return image
+	 */
 	public BufferedImage create(long code) {
 		Random random = new Random(code);
 
@@ -65,6 +73,37 @@ public class Avatar {
 		}
 	}
 
+	/**
+	 * Create avatar image as png bytes
+	 *
+	 * @param code the code
+	 * @return byte array
+	 */
+	public byte[] createAsPngBytes(long code) {
+		BufferedImage src = create(code);
+		try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+			ImageIO.write(src, "png", baos);
+			return baos.toByteArray();
+		} catch (IOException e) {
+			throw new AvatarException("Failed to write png for code=" + code, e);
+		}
+	}
+
+	/**
+	 * Create avatar image as png to file
+	 *
+	 * @param code the code
+	 * @param file file to write png
+	 */
+	public void createAsPngToFile(long code, File file) {
+		BufferedImage src = create(code);
+		try {
+			ImageIO.write(src, "png", file);
+		} catch (IOException e) {
+			throw new AvatarException("Failed to write png for code=" + code, e);
+		}
+	}
+
 	private BufferedImage buildAll(IAvatarInfo avatarInfo) {
 		try {
 			BufferedImage bufferedImage = buildAvatarImage(avatarInfo);
@@ -74,8 +113,7 @@ public class Avatar {
 			int wmp = wm - padding * 2;
 			int hmp = hm - padding * 2;
 
-			bufferedImage = AvatarUtils
-					.resizeImage(bufferedImage, wmp, hmp);
+			bufferedImage = AvatarUtils.resizeImage(bufferedImage, wmp, hmp);
 			bufferedImage = AvatarUtils.planImage(bufferedImage, wm, hm);
 
 			if (layers != null && layers.length > 0) {
@@ -110,17 +148,14 @@ public class Avatar {
 					int elementCount = elementRegistry.getElementCount(avatarInfo, element.name);
 					if (elementCount > 0) {
 						int index = random.nextInt(elementCount);
-						BufferedImage bufferedImage = ImageIO
-								.read(Files
-										.newInputStream(elementRegistry.getElement(avatarInfo, element.name, index)));
+						BufferedImage bufferedImage = ImageIO.read(Files.newInputStream(elementRegistry.getElement(avatarInfo, element.name, index)));
 
 						xmin = Math.min(xmin, -bufferedImage.getWidth() / 2 + element.offsetX);
 						xmax = Math.max(xmax, bufferedImage.getWidth() / 2 + element.offsetX);
 						ymin = Math.min(ymin, -bufferedImage.getHeight() / 2 + element.offsetY);
 						ymax = Math.max(ymax, bufferedImage.getHeight() / 2 + element.offsetY);
 
-						imageInfos.add(new ImageInfo(element.name, AvatarUtils
-								.toARGBImage(bufferedImage), element.offsetX, element.offsetY));
+						imageInfos.add(new ImageInfo(element.name, AvatarUtils.toARGBImage(bufferedImage), element.offsetX, element.offsetY));
 					}
 				}
 			}
@@ -155,6 +190,19 @@ public class Avatar {
 		int x = (width - w) / 2 + imageInfo.offsetX;
 		int y = (height - h) / 2 + imageInfo.offsetY;
 		g2.drawImage(img, x, y, w, h, null);
+	}
+
+	public interface IColorizeFunction {
+
+		/**
+		 * Get color for element
+		 *
+		 * @param avatarInfo current avatarInfo
+		 * @param element    name of element
+		 * @return color
+		 */
+		Color colorize(IAvatarInfo avatarInfo, String element);
+
 	}
 
 	public static class AvatarBuilder {
@@ -252,19 +300,6 @@ public class Avatar {
 			avatar.cache = cache;
 			return avatar;
 		}
-	}
-
-	public interface IColorizeFunction {
-
-		/**
-		 * Get color for element
-		 *
-		 * @param avatarInfo current avatarInfo
-		 * @param element    name of element
-		 * @return color
-		 */
-		Color colorize(IAvatarInfo avatarInfo, String element);
-
 	}
 
 	private static class ImageInfo {
