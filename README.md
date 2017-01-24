@@ -12,6 +12,22 @@ Generate one avatar
 
 ## Avatar prédéfinis
 
+### Identicon
+
+Source : https://github.com/donpark/identicon
+
+**Example 1 :**
+
+```java
+Avatar avatar = IdenticonAvatar.newAvatarBuilder().build();
+
+avatar.create(123456L);
+```
+
+[Sample Identicon1](sample/src/main/java/Identicon1Main.java)
+
+![image](doc/identicon1.png)
+
 ### GitHub
 
 **Example 1 :**

@@ -1,11 +1,15 @@
 package com.talanlabs.avatargenerator.utils;
 
+import javax.imageio.ImageIO;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
@@ -156,5 +160,21 @@ public class AvatarUtils {
 		g2.drawImage(src, 0, 0, null);
 		g2.dispose();
 		return dest;
+	}
+
+	/**
+	 * Save image in temp path
+	 *
+	 * @param src image
+	 * @return path
+	 */
+	public static Path saveImageInTemp(BufferedImage src) {
+		try {
+			Path path = Files.createTempFile("image", ".png");
+			ImageIO.write(src, "png", path.toFile());
+			return path;
+		} catch (IOException e) {
+			throw new RuntimeException("Failed to save image", e);
+		}
 	}
 }
