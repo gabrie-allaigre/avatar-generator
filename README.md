@@ -20,8 +20,6 @@ In Central Maven :
 
 ### Triangle
 
-Source : https://github.com/donpark/triangle
-
 **Example 1 :**
 
 ```java
@@ -34,6 +32,21 @@ avatar.create(123456L);
 
 ![image](doc/triangle1.png)
 
+### Square
+
+Source : https://github.com/flouthoc/minBlock.js
+
+**Example 1 :**
+
+```java
+Avatar avatar = SquareAvatar.newAvatarBuilder().build();
+
+avatar.create(123456L);
+```
+
+[Sample Square1](sample/src/main/java/Square1Main.java)
+
+![image](doc/square1.png)
 
 ### Identicon
 

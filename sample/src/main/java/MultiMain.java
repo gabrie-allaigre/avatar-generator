@@ -1,6 +1,7 @@
 import com.talanlabs.avatargenerator.Avatar;
 import com.talanlabs.avatargenerator.GitHubAvatar;
 import com.talanlabs.avatargenerator.IdenticonAvatar;
+import com.talanlabs.avatargenerator.SquareAvatar;
 import com.talanlabs.avatargenerator.TriangleAvatar;
 import com.talanlabs.avatargenerator.cat.CatAvatar;
 import com.talanlabs.avatargenerator.eightbit.EightBitAvatar;
@@ -33,11 +34,12 @@ public class MultiMain {
 				SmileyAvatar.newDefaultAvatarBuilder().size(size, size).build(),
 				EightBitAvatar.newMaleAvatarBuilder().size(size, size).build(),
 				EightBitAvatar.newFemaleAvatarBuilder().size(size, size).build(),
-				TriangleAvatar.newAvatarBuilder().size(size, size).build()
+				TriangleAvatar.newAvatarBuilder().size(size, size).build(),
+				SquareAvatar.newAvatarBuilder().size(size, size).build()
 		};
 
-		int w = 8;
-		int h = 4;
+		int w = 16;
+		int h = 6;
 		BufferedImage dest = new BufferedImage(size * w, size * h, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2 = dest.createGraphics();
 		AvatarUtils.activeAntialiasing(g2);

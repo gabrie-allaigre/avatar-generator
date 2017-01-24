@@ -3,7 +3,6 @@ package com.talanlabs.avatargenerator.element;
 import com.talanlabs.avatargenerator.IAvatarInfo;
 import com.talanlabs.avatargenerator.utils.AvatarUtils;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.nio.file.Path;
@@ -57,8 +56,7 @@ public class GitHubElementRegistry extends ElementRegistry {
 		Graphics2D g2 = bufferedImage.createGraphics();
 		AvatarUtils.activeAntialiasing(g2);
 
-		String n = addZeroes(Long.toHexString(avatarInfo.getCode()), 6);
-		g2.setColor(new Color(Integer.parseInt(n.substring(0, 6), 16)));
+		g2.setColor(AvatarUtils.extractColor(avatarInfo.getCode()));
 
 		int mult = size / ((precision * 2) - 1);
 		for (int x = 0; x < precision; x++) {

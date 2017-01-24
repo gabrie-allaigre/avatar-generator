@@ -205,8 +205,8 @@ public class NineBlockIdenticonRenderer {
 		// shape color and background color are too similar (measured by color
 		// distance).
 		Color strokeColor = null;
-		if (getColorDistance(fillColor, backgroundColor) < 32.0f) {
-			strokeColor = getComplementaryColor(fillColor);
+		if (AvatarUtils.getColorDistance(fillColor, backgroundColor) < 32.0f) {
+			strokeColor = AvatarUtils.getComplementaryColor(fillColor);
 		}
 
 		// -------------------------------------------------
@@ -290,29 +290,5 @@ public class NineBlockIdenticonRenderer {
 		g.fill(shape);
 
 		g.setTransform(savet);
-	}
-
-	/**
-	 * Returns distance between two colors.
-	 *
-	 * @param c1
-	 * @param c2
-	 * @return
-	 */
-	private float getColorDistance(Color c1, Color c2) {
-		float dx = c1.getRed() - c2.getRed();
-		float dy = c1.getGreen() - c2.getGreen();
-		float dz = c1.getBlue() - c2.getBlue();
-		return (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
-	}
-
-	/**
-	 * Returns complementary color.
-	 *
-	 * @param color
-	 * @return
-	 */
-	private Color getComplementaryColor(Color color) {
-		return new Color(color.getRGB() ^ 0x00FFFFFF);
 	}
 }

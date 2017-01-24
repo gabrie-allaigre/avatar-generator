@@ -177,4 +177,46 @@ public class AvatarUtils {
 			throw new RuntimeException("Failed to save image", e);
 		}
 	}
+
+	private static String addZeroes(String ns, int nd) {
+		for (int i = 0; i < nd - ns.length(); i++) {
+			ns = "0" + ns;
+		}
+		return ns;
+	}
+
+	/**
+	 * Extract color in code
+	 *
+	 * @param code current code
+	 * @return color
+	 */
+	public static Color extractColor(long code) {
+		String n = addZeroes(Long.toHexString(code), 6);
+		return new Color(Integer.parseInt(n.substring(0, 6), 16));
+	}
+
+	/**
+	 * Get distance between two colors
+	 *
+	 * @param c1 color 1
+	 * @param c2 color 2
+	 * @return distance
+	 */
+	public static float getColorDistance(Color c1, Color c2) {
+		float dx = c1.getRed() - c2.getRed();
+		float dy = c1.getGreen() - c2.getGreen();
+		float dz = c1.getBlue() - c2.getBlue();
+		return (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
+	}
+
+	/**
+	 * Returns complementary color.
+	 *
+	 * @param color
+	 * @return
+	 */
+	public static Color getComplementaryColor(Color color) {
+		return new Color(color.getRGB() ^ 0x00FFFFFF);
+	}
 }
