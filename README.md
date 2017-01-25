@@ -125,7 +125,7 @@ avatar.create(123456L);
 </dependency>
 ```
 
-Images sources : https://framagit.org/Deevad/cat-avatar-generator
+Images sources :  CC-By 4.0 attribution: David Revoy https://framagit.org/Deevad/cat-avatar-generator
 
 **Example 1 :**
 
