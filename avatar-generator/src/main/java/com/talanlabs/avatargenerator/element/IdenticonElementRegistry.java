@@ -4,6 +4,7 @@ import com.talanlabs.avatargenerator.IAvatarInfo;
 import com.talanlabs.avatargenerator.element.identicon.NineBlockIdenticonRenderer;
 import com.talanlabs.avatargenerator.utils.AvatarUtils;
 
+import java.math.BigDecimal;
 import java.nio.file.Path;
 
 public class IdenticonElementRegistry extends ElementRegistry {
@@ -41,7 +42,7 @@ public class IdenticonElementRegistry extends ElementRegistry {
 	}
 
 	private Path buildImage(IAvatarInfo avatarInfo) {
-		int code = (int) (avatarInfo.getCode() / Math.pow(2, 32));
+		int code = new BigDecimal(avatarInfo.getCode()).remainder(new BigDecimal(2).pow(32)).intValue();
 		int size = Math.min(avatarInfo.getWidth() - (avatarInfo.getMargin() + avatarInfo.getPadding()) * 2, avatarInfo
 				.getHeight() - (avatarInfo.getMargin() + avatarInfo.getPadding()) * 2);
 		return AvatarUtils.saveImageInTemp(nineBlockIdenticonRenderer.render(code, size));
