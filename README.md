@@ -1,6 +1,6 @@
 # Avatar Generator
 
-Generate one avatar
+Generator of avatar
 
 ![image](doc/multi.png)
 
@@ -12,13 +12,13 @@ In Central Maven :
 <dependency>
     <groupId>com.talanlabs</groupId>
     <artifactId>avatar-generator</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
 ## Usage
 
-Use `Avatar.newBuilder()...build()`
+Use `Avatar avatar = Avatar.newBuilder()...build()`
 
 **Configuration :**
 
@@ -27,13 +27,15 @@ Use `Avatar.newBuilder()...build()`
 | elementRegistry(ElementRegistry elementRegistry) | Registry elements & groups |
 | size(int width, int height) | Size of final image |
 | padding(int padding) | Add padding in pixel of elements |
-| margin(int margin) | Add marge |
+| margin(int margin) | Add marge in pixel |
 | layers(ILayer... layers) | Add layers to apply in elements |
 | color(Color color) | Colorize all elements |
 | colorizeFunction(IColorizeFunction colorizeFunction) | Colorize elements |
 | cache(ICache cache) | Use cache |
 
 **Create :**
+
+Use `avatar.create...`
 
 |Method|Description|
 |---|---|
