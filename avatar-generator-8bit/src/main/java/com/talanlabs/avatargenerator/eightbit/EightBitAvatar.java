@@ -3,6 +3,7 @@ package com.talanlabs.avatargenerator.eightbit;
 import com.talanlabs.avatargenerator.Avatar;
 import com.talanlabs.avatargenerator.element.ElementInfo;
 import com.talanlabs.avatargenerator.element.ElementRegistry;
+import com.talanlabs.avatargenerator.element.URLElementRegistry;
 
 public class EightBitAvatar {
 
@@ -24,17 +25,18 @@ public class EightBitAvatar {
 	 * New cat element resgistry
 	 */
 	public static ElementRegistry newMaleElementRegistry() {
-		ElementRegistry elementRegistry = new ElementRegistry();
-		for (EightMaleElementType catElementType : EightMaleElementType.values()) {
-			elementRegistry.putElement(catElementType.name(), ElementRegistry.lsPng(catElementType.path));
+		URLElementRegistry elementRegistry = new URLElementRegistry();
+		for (EightMaleElementType eightMaleElementType : EightMaleElementType.values()) {
+			elementRegistry.putElement(eightMaleElementType.name(), URLElementRegistry
+					.lsPngURLs(EightBitAvatar.class.getClassLoader(), eightMaleElementType.path));
 		}
 
 		elementRegistry.putGroup(ElementInfo.of(EightMaleElementType.background.name()),
-				ElementInfo.of(EightMaleElementType.face.name()),
-				ElementInfo.of(EightMaleElementType.clothes.name()),
-				ElementInfo.of(EightMaleElementType.hair.name()),
-				ElementInfo.of(EightMaleElementType.eye.name()),
-				ElementInfo.of(EightMaleElementType.mouth.name()));
+		                         ElementInfo.of(EightMaleElementType.face.name()),
+		                         ElementInfo.of(EightMaleElementType.clothes.name()),
+		                         ElementInfo.of(EightMaleElementType.hair.name()),
+		                         ElementInfo.of(EightMaleElementType.eye.name()),
+		                         ElementInfo.of(EightMaleElementType.mouth.name()));
 
 		return elementRegistry;
 	}
@@ -43,17 +45,18 @@ public class EightBitAvatar {
 	 * New cat element resgistry
 	 */
 	public static ElementRegistry newFemaleElementRegistry() {
-		ElementRegistry elementRegistry = new ElementRegistry();
-		for (EightFemaleElementType catElementType : EightFemaleElementType.values()) {
-			elementRegistry.putElement(catElementType.name(), ElementRegistry.lsPng(catElementType.path));
+		URLElementRegistry elementRegistry = new URLElementRegistry();
+		for (EightFemaleElementType eightFemaleElementType : EightFemaleElementType.values()) {
+			elementRegistry.putElement(eightFemaleElementType.name(), URLElementRegistry
+					.lsPngURLs(EightBitAvatar.class.getClassLoader(), eightFemaleElementType.path));
 		}
 
 		elementRegistry.putGroup(ElementInfo.of(EightFemaleElementType.background.name()),
-				ElementInfo.of(EightFemaleElementType.face.name()),
-				ElementInfo.of(EightFemaleElementType.clothes.name()),
-				ElementInfo.of(EightFemaleElementType.hair.name()),
-				ElementInfo.of(EightFemaleElementType.eye.name()),
-				ElementInfo.of(EightFemaleElementType.mouth.name()));
+		                         ElementInfo.of(EightFemaleElementType.face.name()),
+		                         ElementInfo.of(EightFemaleElementType.clothes.name()),
+		                         ElementInfo.of(EightFemaleElementType.hair.name()),
+		                         ElementInfo.of(EightFemaleElementType.eye.name()),
+		                         ElementInfo.of(EightFemaleElementType.mouth.name()));
 
 		return elementRegistry;
 	}
