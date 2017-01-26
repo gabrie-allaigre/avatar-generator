@@ -12,7 +12,7 @@ In Central Maven :
 <dependency>
     <groupId>com.talanlabs</groupId>
     <artifactId>avatar-generator</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
