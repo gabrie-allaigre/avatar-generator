@@ -13,9 +13,6 @@ build_job:
     - docker
 build_merge_job:
   stage: build
-  git:
-      strategy: clone
-      depth: 1
   except:
     - master
     - tags
