@@ -3,6 +3,7 @@ package com.talanlabs.avatargenerator.smiley;
 import com.talanlabs.avatargenerator.Avatar;
 import com.talanlabs.avatargenerator.element.ElementInfo;
 import com.talanlabs.avatargenerator.element.ElementRegistry;
+import com.talanlabs.avatargenerator.element.URLElementRegistry;
 import com.talanlabs.avatargenerator.functions.RandomColorizeFunction;
 import com.talanlabs.avatargenerator.layers.backgrounds.RandomColorPaintBackgroundLayer;
 import com.talanlabs.avatargenerator.layers.masks.RoundRectMaskLayer;
@@ -12,16 +13,15 @@ import com.talanlabs.avatargenerator.layers.shadows.ScoreShadowLayer;
 import com.talanlabs.avatargenerator.utils.AvatarUtils;
 
 import java.awt.Color;
-import java.net.URISyntaxException;
-import java.nio.file.Paths;
 import java.util.Collections;
 
 public class SmileyAvatar {
 
-	private static ElementRegistry newAllElementRegistry() {
-		ElementRegistry elementRegistry = new ElementRegistry();
+	private static URLElementRegistry newAllElementRegistry() {
+		URLElementRegistry elementRegistry = new URLElementRegistry();
 		for (SmileyElementType smileyElementType : SmileyElementType.values()) {
-			elementRegistry.putElement(smileyElementType.name(), ElementRegistry.lsPng(smileyElementType.path));
+			elementRegistry.putElement(smileyElementType.name(), URLElementRegistry
+					.lsPngURLs(SmileyAvatar.class.getClassLoader(), smileyElementType.path));
 		}
 		return elementRegistry;
 	}
@@ -37,35 +37,29 @@ public class SmileyAvatar {
 	 * New default element registry
 	 */
 	public static ElementRegistry newDefaultElementRegistry() {
-		ElementRegistry elementRegistry = newAllElementRegistry();
+		URLElementRegistry elementRegistry = newAllElementRegistry();
 
+		elementRegistry.putGroup(ElementInfo.of(SmileyElementType.shape.name()),
+		                         ElementInfo.of(SmileyElementType.eyeBig.name()),
+		                         ElementInfo.of(SmileyElementType.happyMouth.name()));
+		elementRegistry.putGroup(ElementInfo.of(SmileyElementType.shape.name()),
+		                         ElementInfo.of(SmileyElementType.eyeBig.name()),
+		                         ElementInfo.of(SmileyElementType.sadMouth.name()));
+		elementRegistry.putGroup(ElementInfo.of(SmileyElementType.moreShape.name()),
+		                         ElementInfo.of(SmileyElementType.eyeBig.name()),
+		                         ElementInfo.of(SmileyElementType.happyMouth.name()));
+		elementRegistry.putGroup(ElementInfo.of(SmileyElementType.moreShape.name()),
+		                         ElementInfo.of(SmileyElementType.eyeBig.name()),
+		                         ElementInfo.of(SmileyElementType.sadMouth.name()));
 		elementRegistry
-				.putGroup(ElementInfo.of(SmileyElementType.shape.name()), ElementInfo
-						.of(SmileyElementType.eyeBig.name()), ElementInfo
-						.of(SmileyElementType.happyMouth.name()));
+				.putGroup(ElementInfo.of(SmileyElementType.shape.name()), ElementInfo.of(SmileyElementType.eye.name()),
+				          ElementInfo.of(SmileyElementType.eyebrow.name()),
+				          ElementInfo.of(SmileyElementType.beard.name()));
 		elementRegistry
-				.putGroup(ElementInfo.of(SmileyElementType.shape.name()), ElementInfo
-						.of(SmileyElementType.eyeBig.name()), ElementInfo
-						.of(SmileyElementType.sadMouth.name()));
-		elementRegistry
-				.putGroup(ElementInfo.of(SmileyElementType.moreShape.name()), ElementInfo
-						.of(SmileyElementType.eyeBig.name()), ElementInfo
-						.of(SmileyElementType.happyMouth.name()));
-		elementRegistry
-				.putGroup(ElementInfo.of(SmileyElementType.moreShape.name()), ElementInfo
-						.of(SmileyElementType.eyeBig.name()), ElementInfo
-						.of(SmileyElementType.sadMouth.name()));
-		elementRegistry
-				.putGroup(ElementInfo.of(SmileyElementType.shape.name()), ElementInfo
-						.of(SmileyElementType.eye.name()), ElementInfo
-						.of(SmileyElementType.eyebrow.name()), ElementInfo
-						.of(SmileyElementType.beard.name()));
-		elementRegistry
-				.putGroup(ElementInfo.of(SmileyElementType.shape.name()), ElementInfo
-						.of(SmileyElementType.eye.name()), ElementInfo
-						.of(SmileyElementType.eyebrow.name()), ElementInfo
-						.of(SmileyElementType.glass.name()), ElementInfo
-						.of(SmileyElementType.happyMouth.name()));
+				.putGroup(ElementInfo.of(SmileyElementType.shape.name()), ElementInfo.of(SmileyElementType.eye.name()),
+				          ElementInfo.of(SmileyElementType.eyebrow.name()),
+				          ElementInfo.of(SmileyElementType.glass.name()),
+				          ElementInfo.of(SmileyElementType.happyMouth.name()));
 
 		return elementRegistry;
 	}
@@ -76,24 +70,25 @@ public class SmileyAvatar {
 	public static Avatar.AvatarBuilder newAccessoriesAvatarBuilder() {
 		return Avatar.newBuilder().size(98, 98).elementRegistry(newAccessoriesElementRegistry())
 				.colorizeFunction(new RandomColorizeFunction()).padding(8)
-				.layers(new ShadowLayer(), new ScoreShadowLayer(), new RandomColorPaintBackgroundLayer(), new RoundRectMaskLayer(), new ShadowLayer());
+				.layers(new ShadowLayer(), new ScoreShadowLayer(), new RandomColorPaintBackgroundLayer(),
+				        new RoundRectMaskLayer(), new ShadowLayer());
 	}
-
 
 	/**
 	 * New accessories element registry
 	 */
 	public static ElementRegistry newAccessoriesElementRegistry() {
-		ElementRegistry elementRegistry = newAllElementRegistry();
+		URLElementRegistry elementRegistry = newAllElementRegistry();
 
 		elementRegistry
 				.putGroup(ElementInfo.of(SmileyElementType.beard.name()), ElementInfo.of(SmileyElementType.hat.name()));
-		elementRegistry.putGroup(ElementInfo.of(SmileyElementType.beard.name()), ElementInfo
-				.of(SmileyElementType.glass.name()));
+		elementRegistry.putGroup(ElementInfo.of(SmileyElementType.beard.name()),
+		                         ElementInfo.of(SmileyElementType.glass.name()));
 		elementRegistry
 				.putGroup(ElementInfo.of(SmileyElementType.glass.name()), ElementInfo.of(SmileyElementType.hat.name()));
-		elementRegistry.putGroup(ElementInfo.of(SmileyElementType.beard.name()), ElementInfo
-				.of(SmileyElementType.glass.name()), ElementInfo.of(SmileyElementType.hat.name()));
+		elementRegistry.putGroup(ElementInfo.of(SmileyElementType.beard.name()),
+		                         ElementInfo.of(SmileyElementType.glass.name()),
+		                         ElementInfo.of(SmileyElementType.hat.name()));
 		elementRegistry.putGroup(ElementInfo.of(SmileyElementType.mask.name()));
 
 		return elementRegistry;
@@ -103,18 +98,19 @@ public class SmileyAvatar {
 	 * Create eye/mouth avatar
 	 */
 	public static Avatar.AvatarBuilder newEyeMouthAvatarBuilder() {
-		return Avatar.newBuilder().size(82, 82).elementRegistry(newEyeMouthElementRegistry())
-				.colorizeFunction(null).padding(0)
-				.layers(new RatioLayer(1.0), new ShadowLayer(), new ScoreShadowLayer(), new RandomColorPaintBackgroundLayer(), new RoundRectMaskLayer(), new ShadowLayer());
+		return Avatar.newBuilder().size(82, 82).elementRegistry(newEyeMouthElementRegistry()).colorizeFunction(null)
+				.padding(0)
+				.layers(new RatioLayer(1.0), new ShadowLayer(), new ScoreShadowLayer(),
+				        new RandomColorPaintBackgroundLayer(), new RoundRectMaskLayer(), new ShadowLayer());
 	}
 
 	/**
 	 * New smiley element registry
 	 */
 	public static ElementRegistry newEyeMouthElementRegistry() {
-		ElementRegistry elementRegistry = newAllElementRegistry();
-		elementRegistry.putGroup(ElementInfo.of(SmileyElementType.eyeBig.name(), 0, -10), ElementInfo
-				.of(SmileyElementType.happyMouth.name(), 0, 10));
+		URLElementRegistry elementRegistry = newAllElementRegistry();
+		elementRegistry.putGroup(ElementInfo.of(SmileyElementType.eyeBig.name(), 0, -10),
+		                         ElementInfo.of(SmileyElementType.happyMouth.name(), 0, 10));
 		return elementRegistry;
 	}
 
@@ -137,16 +133,13 @@ public class SmileyAvatar {
 	 * New smiley element registry
 	 */
 	public static ElementRegistry newGhostElementRegistry() {
-		ElementRegistry elementRegistry = newAllElementRegistry();
-		try {
-			elementRegistry.putElement(SmileyElementType.moreShape.name(),
-					Collections.singletonList(Paths.get(SmileyAvatar.class
-							.getResource("/com/talanlabs/avatargenerator/smiley/images/MoreShape/30-2.png").toURI())));
-		} catch (URISyntaxException e) {
-			throw new RuntimeException("Failed to load ghost", e);
-		}
-		elementRegistry.putGroup(ElementInfo.of(SmileyElementType.moreShape.name()), ElementInfo
-				.of(SmileyElementType.eyeBig.name(), 0, -5), ElementInfo.of(SmileyElementType.happyMouth.name(), 0, 5));
+		URLElementRegistry elementRegistry = newAllElementRegistry();
+		elementRegistry.putElement(SmileyElementType.moreShape.name(), Collections.singletonList(
+				SmileyAvatar.class.getResource("/com/talanlabs/avatargenerator/smiley/images/MoreShape/30-2.png")));
+
+		elementRegistry.putGroup(ElementInfo.of(SmileyElementType.moreShape.name()),
+		                         ElementInfo.of(SmileyElementType.eyeBig.name(), 0, -5),
+		                         ElementInfo.of(SmileyElementType.happyMouth.name(), 0, 5));
 		return elementRegistry;
 	}
 }

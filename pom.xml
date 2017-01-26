@@ -30,6 +30,7 @@
         <jlegorify.version>1.0.0</jlegorify.version>
 		<filters.version>2.0.235-1</filters.version>
 		<guava.version>19.0</guava.version>
+		<reflections.version>0.9.10</reflections.version>
     </properties>
     <organization>
         <name>Talanlabs</name>
@@ -169,6 +170,11 @@
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava</artifactId>
 				<version>${guava.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.reflections</groupId>
+				<artifactId>reflections</artifactId>
+				<version>${reflections.version}</version>
 			</dependency>
 		</dependencies>
     </dependencyManagement>
