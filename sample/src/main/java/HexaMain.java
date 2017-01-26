@@ -19,7 +19,7 @@ public class HexaMain {
 		g2.drawLine(0, size / 2, size, size / 2);
 
 		double d = size / 4.0;
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 6; i++) {
 			double cx = (Math.cos(Math.toRadians(i * 60)) * d + size / 2);
 			double cy = (Math.sin(Math.toRadians(i * 60)) * d + size / 2);
 			drawTriangle(g2, cx, cy, d, i * 60 + 180);
@@ -31,14 +31,14 @@ public class HexaMain {
 	}
 
 	private static void drawTriangle(Graphics2D g2, double cx, double cy, double d, int a) {
-		double xs[] = new double[6];
-		double ys[] = new double[6];
-		for (int i = 0; i < 6; i++) {
-			xs[i] = (Math.cos(Math.toRadians(i * 60 + a)) * d + cx);
-			ys[i] = (Math.sin(Math.toRadians(i * 60 + a)) * d + cy);
+		double xs[] = new double[3];
+		double ys[] = new double[3];
+		for (int i = 0; i < 3; i++) {
+			xs[i] = (Math.cos(Math.toRadians(i * 120 + a)) * d + cx);
+			ys[i] = (Math.sin(Math.toRadians(i * 120 + a)) * d + cy);
 		}
 
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 3; i++) {
 			g2.setColor(AvatarUtils.defaultColors.get(i));
 
 			GeneralPath gp = new GeneralPath();
