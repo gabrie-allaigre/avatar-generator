@@ -123,7 +123,7 @@ avatar.create(123456L);
 <dependency>
     <groupId>com.talanlabs</groupId>
     <artifactId>avatar-generator-cat</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
@@ -161,7 +161,7 @@ avatar.create(123456L);
 <dependency>
     <groupId>com.talanlabs</groupId>
     <artifactId>avatar-generator-smiley</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
@@ -220,7 +220,7 @@ avatar.create(123456L);
 <dependency>
     <groupId>com.talanlabs</groupId>
     <artifactId>avatar-generator-8bit</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
